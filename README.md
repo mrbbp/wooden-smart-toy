@@ -40,4 +40,4 @@ Patents for touch grid and conduction way between capacitive screen and body are
 - Etienne Jean MINEUR and Bertrand DUPLAT from http://www.volumique.com [FR 2995423, FR 2994752, FR 2970352]*
 - Marie Merouze http://www.marbotic.fr [FR 3003661]*
 
-*[N° Patents find on http://xwww.inpi.fr]
+*[N° Patents find on http://www.inpi.fr]
