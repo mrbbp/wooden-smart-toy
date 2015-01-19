@@ -13,6 +13,9 @@ To avoid screensize pb detection, i've decided to work in millimeter and made a 
 <code>flash.system.Capabilities.screenDPI</code> return fake value.<br/>
 I use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter. 
 
+Detection on iPad is relatively easy because there is few hardware: retina or none, 7.9 inch or 9.7. So only 4 screenDPI.
+I do not try to do the same truth table for Android, because hardware is so various (more screen size and more  resolution... a nigthmare.. if you need it, be my guest and share.)
+
 I'm not developer, just graphic & interaction designer, i do apologize for my bad english and my hugly code.
 Hope this will help!
 
@@ -31,6 +34,7 @@ import com.mrbbp.Piece;
 var debug:Debug = new Debug(this);
 var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this, true);</code></pre>
 
+I've used additional lib with custom cartesianToPolar method, from Ian McLean
 
 Patents for touch grid and conduction way between capacitive screen and body are patented by
 - Etienne Jean MINEUR and Bertrand DUPLAT from http://www.volumique.com [FR 2995423, FR 2994752, FR 2970352]*
