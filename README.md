@@ -4,9 +4,10 @@
 I've just done reverse engineering to find a way to detect and read Touch patterns.
 
 Each wooden piece is connected to touchscreen by 3 touch pad with specific configuration.<br />
-Two pads are for the "base" (always the same identical gap).<br/>
+Two pads are for the "base" (always the same width).<br/>
 The last pad is the satellite point which made the pattern, give the significant part.<br/>
-The satellite point is define by angle and distance from the middle point of the base. in polar's coords.
+The satellite point is define by angle and distance from the middle point of the base, in polar's coords.
+The base width is fixe and always the smallest from the 3.
 
 To avoid screensize pb detection, i've decided to work in millimeter and made a truth table with true dpi of the screen.
 
