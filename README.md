@@ -1,6 +1,8 @@
 # wooden-smart-toy
 ####This project is an as3 lib to detect and identify on iPad,<br />patented wooden pieces created and sold by Marbotic.fr.
 
+![marbotic wooden pieces] (http://www.marbotic.fr/wp-content/uploads/2013/11/chiffres-rond-400x400.jpg) ![marbotic wooden pieces - back view] (http://www.marbotic.fr/wp-content/uploads/2013/11/chiffres-picots-400x400.jpg)
+
 I've just done reverse engineering to find a way to detect and read Touch patterns.
 
 Each wooden piece is connected to touchscreen by 3 touch pad with specific configuration.<br />
