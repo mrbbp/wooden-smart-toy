@@ -11,7 +11,7 @@ The satellite point is define by angle and distance from the middle point of the
 To avoid screensize pb detection, i've decided to work in millimeter and made a truth table with true dpi of the screen.
 
 <code>flash.system.Capabilities.screenDPI</code> return fake value.<br/>
-I use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the real pixel size for a millimeter. 
+I use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter. 
 
 I'm not developer, just graphic & interaction designer, i do apologize for my bad english and my hugly code.
 Hope this will help!
