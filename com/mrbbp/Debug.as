@@ -1,5 +1,7 @@
 ﻿package com.mrbbp {
 
+	import com.mrbbp.Test;
+	import com.mrbbp.Device;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.events.Event;
@@ -9,17 +11,19 @@
 
 	public class Debug {
 
-		public var parent: App;
+		public var parent:Test;
 		public var debugField: TextField;
 		public var dTF: TextFormat;
 		public var enabled: Boolean;
+		private var device:Device;
 
-		public function Debug(lApp: App) :void {
+		public function Debug(lApp:Test) :void {
 			// constructor code
 			dTF = new TextFormat();
 			parent = lApp;
 			dTF.color = "0xFFFF11";
 			dTF.font = "verdana";
+			device = new Device(lApp);
 
 			debugField = new TextField();
 			// si ajouté à la display liste, il connait stage
@@ -52,7 +56,16 @@
 			debugField.multiline = true;
 			debugField.mouseEnabled = false;
 			clear();
-			debugField.text = "version: " + lApp.MajorVersion + "." + lApp.MinorVersion + "\n";
+			debugField.text = 	"version player: " + String (flash.system.Capabilities.version )+
+								"\nscreenResolutionX: " + String(flash.system.Capabilities.screenResolutionX) + " | " +
+								"screenResolutionY: " + String(flash.system.Capabilities.screenResolutionY) +
+								"\nCPU: " + flash.system.Capabilities.cpuArchitecture +
+								" | OS: " + flash.system.Capabilities.os +
+								"\nStage: " + debugField.stage.stageWidth + " x " + debugField.stage.stageHeight +
+								" | ScreenDPI: " + flash.system.Capabilities.screenDPI +
+								" | DPI réel: "+ device.DPI+
+								"\nstageOrientation :" + parent.stageOrientation +
+								"\n";
 		}
 
 		public function write(text: String): void {
@@ -89,7 +102,7 @@
 				debugField.height = evt.currentTarget.stage.stageHeight - 40;
 			}
 			//trace(evt.beforeOrientation+" vers "+evt.afterOrientation);
-			var oldSO:String = parent.stageOrientation;
+			var oldSO:String = evt.beforeOrientation;
 			debugField.stage.stageWidth >= debugField.stage.stageHeight ? parent.stageOrientation ="LANDSCAPE" : parent.stageOrientation="PORTRAIT";
 			/* remplace l'orientation dans debugField */
 			var theContent:String = debugField.text;

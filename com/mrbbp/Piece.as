@@ -1,7 +1,9 @@
 ﻿package com.mrbbp {
 	
-	import com.mrbbp.App;
+	import com.mrbbp.Test;
 	import com.mrbbp.Debug;
+	import com.mrbbp.Device;
+	
 	import flash.geom.Point;
 	import utils.geom.*;
 	import flash.display.Sprite;
@@ -35,13 +37,13 @@
 		public var ecartBaseMM:Number;
 		public var rhoMM:Number;
 
-		// stage et le model de tablette (pour les dpi)
+		// stage & model (for screendpi)
 		private static var _racine:*;
 		private var _device:Device;
 		
 		private var aEcartBase:Array = new Array();
 		
-		// pour le dessin de la piece en mode debug
+		// pour le dessin de la piece en mode debug - for drawing Piece in debugMode
 		private var diamTrace:int;
 		private var epTrace:int;
 		private var aCoulTrace: Array = new Array("0xeeeeee", "0xaaaaaa", "0x666666", "0x222222");
@@ -49,22 +51,14 @@
 		private var INVERSE:Boolean = false;
 		private var piece:Shape;
 		private var numPiece:Shape;
-		public var reperePiece:ReperePiece;
-		public var objNumPiece:NumPiece;
 		
-		/*
-		init(p0,p1,p2);
-		- Dessine(); -> points detectés
-		- Debug(); -> dessin pièces après réorientation
-		- RhoTheta();
-		- Stats();
-		*/
-		
-		public function Piece(p0:Point, p1:Point, p2:Point, racine:*, device:Device, debug:Boolean = false) {
-			
-			_device = device;
+		public function Piece(p0:Point, p1:Point, p2:Point, racine:*, debug:Boolean = false) {
+			                                  //device:Device,
+			_device = new Device(racine);
 			_debug = debug;
+			_racine = racine;
 			
+			// drawing purpose depend of retina display or not
 			if (flash.system.Capabilities.screenDPI < 150) {
 				diamTrace = 25;
 				epTrace = 2;
@@ -73,39 +67,14 @@
 				epTrace = 4;
 			}
 			
-			
-			//trace("réf:",this,App._stage,MovieClip(_racine));
-			
-			 //App._stage = Stage;
-			_racine = racine;
-			
-			// test de gestion de l'affichage dans la classe
+			// create a shape and add to stage
 			piece = new Shape();
 			_racine.addChild(piece);
 			
-			piece.x = App._stage.stageWidth / 4; // au quart de l'écran
-			piece.y = 2*App._stage.stageHeight / 3;
-			
-			if (debug ) {      // && !App._stage.(reperePiece as Shape)
-				reperePiece = new ReperePiece();
-				objNumPiece = new NumPiece();
-				//App._stage.addChild(reperePiece);
-				_racine.addChild(reperePiece);
-				_racine.addChild(objNumPiece);
-				// gere la taille du picto
-				if (flash.system.Capabilities.screenDPI > 150) {
-					reperePiece.scaleX = reperePiece.scaleY = 2;
-					objNumPiece.scaleX = objNumPiece.scaleY = 2;
-				}
-				// le positionne correctement
-				reperePiece.x = App._stage.stageWidth - 20 - reperePiece.width/2;
-				reperePiece.y = reperePiece.height/2 + 20;
-				objNumPiece.x = App._stage.stageWidth/4;
-				objNumPiece.y = App._stage.stageHeight/2;
-			}
+			piece.x = _racine.stage.stageWidth / 4; // au quart de l'écran
+			piece.y = (2* _racine.stage.stageHeight) / 3;
 			
 			// constructor code
-			//trace("touche à ton cul:", p0,p1,p2);
 			var d0: Number = Point.distance(p0, p1);
 			var d1: Number = Point.distance(p1, p2);
 			var d2: Number = Point.distance(p2, p0);
@@ -164,13 +133,8 @@
 		}
 		
 		public function Efface():void {
-			//piece.graphics.clear();
 			_racine.removeChild(piece);
-			_racine.removeChild(reperePiece);
-			_racine.removeChild(objNumPiece);
 			piece = null;
-			reperePiece = null;
-			//reperePiece.visible = false;
 		}
 		
 		private function rotatePI(point:Point, centerPoint:Point):void{
@@ -183,39 +147,35 @@
 		
 		private function RhoTheta():void {
 			//calcul le point median Base (.5)
+			// find Base midpoint
 			pBCentre = Point.interpolate(pB1, pB2, .5);
 
 			//point Satellite en bas
+			// if Sat Point is lower than base
 			if (pS.y > pB1.y) {  
 				// il faut retourner la piece
 				rotatePI(pB1, pBCentre);
 				rotatePI(pB2, pBCentre);
 				rotatePI(pSat, pBCentre);
 				INVERSE = true;
-				//trace("base inversée");
-				if (_debug) {
-					reperePiece.rotation = 180;
-				}
-			} else {
-				if (_debug) {
-					reperePiece.rotation = 0;
-				}
+				trace("base inversée");
 			}
 			
 			// décale les points de la Base avec 0,0 de Flash comme origine pour le calcul en polaire
 			if (pB1.x <= pB2.x) {
-				// p1 Base Gauche, p2 Base Droit
+				// p1 Base Left Point, p2 Base Right Point
 				pBaseG.setTo(pB1.x - pBCentre.x, (pB1.y - pBCentre.y) * 1);
 				pBaseD.setTo(pB2.x - pBCentre.x, (pB2.y - pBCentre.y) * 1);
 			} else {
-				//p1 Base Droit, p2 Base Gauche
+				//p1 Base Right Point, p2 Base Left Point
 				pBaseG.setTo(pB2.x - pBCentre.x, (pB2.y - pBCentre.y) * 1);
 				pBaseD.setTo(pB1.x - pBCentre.x, (pB1.y - pBCentre.y) * 1);
 			}
 
 			// déplace pSat sur nouveau repere
+			// translate pSat point to new Origine
 			pSat.setTo(pS.x - pBCentre.x, (pS.y - pBCentre.y) * 1);
-			// place pCentre en 0,0
+			// move pCentre to 0,0
 			pBCentre.setTo(0, 0);
 			
 			// inclinaison de la piece sur la tablette
@@ -226,44 +186,51 @@
 			var pBdTemp: Point = new Point(Math.cos(-angle) * pBaseD.x - Math.sin(-angle) * pBaseD.y, Math.sin(-angle) * pBaseD.x + Math.cos(-angle) * pBaseD.y);
 			var pSatTemp: Point = new Point(Math.cos(-angle) * pSat.x - Math.sin(-angle) * pSat.y, Math.sin(-angle) * pSat.x + Math.cos(-angle) * pSat.y);
 
-			// met à jour les points
+			// update Points coordinates
 			pBaseG.setTo(pBgTemp.x, pBgTemp.y); // pour controle
 			pBaseD.setTo(pBdTemp.x, pBdTemp.y); // pour controle
 			// IMPORTANT
 			pSat.setTo(pSatTemp.x, pSatTemp.y);
 			
-			// si piece à l'envers, on la retourne pour la dessiner
+			// If Piece is reverse, it return it
 			if (INVERSE) {
 				rotatePI(pBaseG, pBCentre);
 				rotatePI(pBaseD, pBCentre);
 				rotatePI(pSat, pBCentre);
 			}
 			
-			// dessine le resultat du calcul dans la premeière moitié de l'écran
-			//(racine as MovieClip).dessinePiece(pBaseG,pBaseD,pSat,pBCentre);
+			// dessine le resultat du calcul dans la première moitié de l'écran
+			// draw detected piece in half left part of the screen
 			if (_debug) {
 				Dessine();
 			}
 
 			// calcul de coordonnée polaires du point satellite
+			// polar coordinates
 			var pPSat: Array = cartesianToPolarCoordinates(pSat.x, pSat.y);
 
 			// pour obtenir l'angle à l'endroit (au dessus)
 			pPSat[1] = 360 - pPSat[1];
 			
-			// remplit les bases de stats
+			// create public var result
 			rho = pPSat[0];
+			// Distance in millimeters
 			rhoMM = Math.round((pPSat[0]/_device._1mm)*10)/10;
+			// Angle in Degres
 			theta = Math.round(pPSat[1]*10)/10;
+			// base gap
 			ecartBaseMM = Math.round(ecartBase/_device._1mm);
 			
+			// add some debug trace
 			trace("point satellite - ecartBase:",ecartBaseMM,"mm RHO: ",rhoMM,"mm - THETA: ",theta,"°");
 
+			// Identify Piece for Marbotic wooden pieces
 			IdPiece();
 			
 		}
 		
 		private function IdPiece():void {
+			// only usefull for Marbotic Wooden Pieces
 			//	rhoMM, theta
 			if (rhoMM > 40) { // 42,46
 				if (rhoMM > 44) { // 46: 9,6
@@ -303,8 +270,8 @@
 				}
 				
 			}
-			trace("Num Pièce:",idPiece);
-			objNumPiece.tChiffre.text = String(idPiece);
+			// trace Piece Number
+			trace("Piece Number:",idPiece);
 		}
 	}
 	
