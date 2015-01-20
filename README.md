@@ -25,19 +25,23 @@ Hope this will help!
 The project compile with Adobe Flash CC 2014 on osx.
 
 To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
-<pre><code>import com.mrbbp.Piece;
+```as3
+import com.mrbbp.Piece;
 
-var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this);</code></pre>
+var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this);
+```
 
 if you want to have some visual feedback you must instanciate a Debug() and add debug parameter to Piece Parameter
 
-<pre><code>import com.mrbbp.Debug;
+```as3
+import com.mrbbp.Debug;
 import com.mrbbp.Piece;
 
 var debug:Debug = new Debug(this);
-var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this, true);</code></pre>
+var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this, true);
+```
 
-I've used additional lib with custom cartesianToPolar method, from Ian McLean
+I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excert of a larger lib from Adobe)
 
 Patents for touch grid and conduction way between capacitive screen and body are patented by
 - Etienne Jean MINEUR and Bertrand DUPLAT from http://www.volumique.com [FR 2995423, FR 2994752, FR 2970352]*
