@@ -41,7 +41,7 @@ var debug:Debug = new Debug(this);
 var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this, true);
 ```
 
-I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt of a larger lib from Adobe) http://www.github.com/as3/as3-utils
+I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt from a larger lib) http://www.github.com/as3/as3-utils
 
 Patents for touch grid and conduction way between capacitive screen and body are patented by
 - Etienne Jean MINEUR and Bertrand DUPLAT from http://www.volumique.com [FR 2995423, FR 2994752, FR 2970352]*
