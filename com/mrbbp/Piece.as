@@ -13,9 +13,13 @@
 	import flash.system.Capabilities;
 	import flash.display.Stage;
 	import flash.display.DisplayObject;
+	import flash.events.Event;
 	
 	public class Piece extends MovieClip {
 		
+		private var p0:Point;
+		private var p1:Point;
+		private var p2:Point;
 		
 		private var pBaseG:Point = new Point();
 		private var pBaseD:Point = new Point();
@@ -52,11 +56,20 @@
 		private var piece:Shape;
 		private var numPiece:Shape;
 		
-		public function Piece(p0:Point, p1:Point, p2:Point, racine:*, debug:Boolean = false) {
-			                                  //device:Device,
-			_device = new Device(racine);
+		public function Piece(_p0:Point, _p1:Point, _p2:Point, debug:Boolean = false) {
+			p0 = _p0;
+			p1 = _p1;
+			p2 = _p2;
 			_debug = debug;
-			_racine = racine;
+			addEventListener ( Event.ADDED_TO_STAGE, activePiece );
+		}
+		
+		private function activePiece(evt:Event):void {
+			removeEventListener ( Event.ADDED_TO_STAGE, activePiece );
+			
+			_device = new Device(stage);
+			
+			//_racine = racine;
 			
 			// drawing purpose depend of retina display or not
 			if (flash.system.Capabilities.screenDPI < 150) {
@@ -69,10 +82,10 @@
 			
 			// create a shape and add to stage
 			piece = new Shape();
-			_racine.addChild(piece);
+			stage.addChild(piece);
 			
-			piece.x = _racine.stage.stageWidth / 4; // au quart de l'écran
-			piece.y = (2* _racine.stage.stageHeight) / 3;
+			piece.x = stage.stageWidth / 4; // au quart de l'écran
+			piece.y = (2* stage.stageHeight) / 3;
 			
 			// constructor code
 			var d0: Number = Point.distance(p0, p1);
@@ -133,7 +146,7 @@
 		}
 		
 		public function Efface():void {
-			_racine.removeChild(piece);
+			stage.removeChild(piece);
 			piece = null;
 		}
 		

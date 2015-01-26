@@ -73,7 +73,7 @@
 					piece = null;
 				}
 				/*********** crée une nouvelle piece **************/
-				piece = new Piece(aTouches[0],aTouches[1],aTouches[2], this, false);
+				piece = new Piece(aTouches[0],aTouches[1],aTouches[2]);
 				addChild(piece);
 			}
 		}
