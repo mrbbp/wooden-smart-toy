@@ -28,7 +28,7 @@ To use it you need at least 3 touch points on screen to instanciate a new Piece 
 ```as3
 import com.mrbbp.Piece;
 
-var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this);
+var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3));
 ```
 
 if you want to have some visual feedback you must instanciate a Debug() and add debug parameter to Piece Parameter
@@ -38,7 +38,7 @@ import com.mrbbp.Debug;
 import com.mrbbp.Piece;
 
 var debug:Debug = new Debug(this);
-var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), this, true);
+var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), true);
 ```
 
 I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt from a larger lib) http://www.github.com/as3/as3-utils
