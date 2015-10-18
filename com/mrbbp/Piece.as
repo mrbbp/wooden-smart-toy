@@ -68,10 +68,17 @@
 			
 			_device = new Device(stage);
 			
-			//_racine = racine;
+			var plusGrandeDim:int;
+			
+			if (flash.system.Capabilities.screenResolutionY > flash.system.Capabilities.screenResolutionX) {
+				plusGrandeDim = flash.system.Capabilities.screenResolutionY;
+			} else {
+				plusGrandeDim = flash.system.Capabilities.screenResolutionX;
+			}
+			
 			
 			// drawing purpose depend of retina display or not
-			if (flash.system.Capabilities.screenDPI < 150) {
+			if (flash.system.Capabilities.screenDPI < 150 || plusGrandeDim < 1300) {
 				diamTrace = 25;
 				epTrace = 2;
 			} else {
