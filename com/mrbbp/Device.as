@@ -1,9 +1,10 @@
-﻿package com.mrbbp {
+package com.mrbbp {
 	
 	/*
 	Permet d'identifier le type de tablette en fonction des données fournies par les flash.system.capabilities + une table d'info techniques justes (DPI, dimension écran)
 	
-	
+	MàJ 18/10/15:
+		- ajout d'une gestion d'android pour les devices. sous android Capabilities.screenDPI semble fiable -> détection des pieces possible
 	
 	
 	*/
@@ -56,17 +57,24 @@
 			_resX = flash.system.Capabilities.screenResolutionX;
 			_resY = flash.system.Capabilities.screenResolutionY;
 			_model = flash.system.Capabilities.os.split(" ")[3];
-			if (_model != null) {
-				_1mm = oScreenDPI[_model]/25.4;
-				trace("Device:",_model,oScreenDPI[_model],oScreenSize[_model],_1mm);
-				DPI = oScreenDPI[_model];
-			} else {
+			if (flash.system.Capabilities.version.split(" ")[0].toUpperCase() == "IOS") { // sous IOS
+				if (_model != null) {
+					_1mm = oScreenDPI[_model]/25.4;
+					trace("sous IOS");
+					trace("Device:",_model,oScreenDPI[_model],oScreenSize[_model],_1mm);
+					DPI = oScreenDPI[_model];
+				}
+			} else if (flash.system.Capabilities.version.split(" ")[0] == "AND") { // sous Android
+				trace("sous Android");
+				_1mm = flash.system.Capabilities.screenDPI/25.4;
+				DPI = flash.system.Capabilities.screenDPI;
+			}  else {
 				trace("pas sous ios");
 				_1mm = flash.system.Capabilities.screenDPI/25.4;
 				DPI = flash.system.Capabilities.screenDPI;
 			}
-			
 		}
+		
 		public function Calcule1mm() {
 			return (_1mm);
 		}
