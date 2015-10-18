@@ -22,7 +22,7 @@ package com.mrbbp {
 		private var _resY:int;
 		private var _model:String;
 		
-		private var oScreenDPI:Object = {"iPad1,1":132,"iPad2,1":132,"iPad2,2":132,"iPad2,3":132,"iPad2,4":132,"iPad2,5":163,"iPad2,6":163,"iPad2,7":163,"iPad3,1":264,"iPad3,2":264,"iPad3,3":264,"iPad3,4":264,"iPad3,5":264,"iPad3,6":264,"iPad4,1":264,"iPad4,2":264,"iPad4,3":264,"iPad4,4":326,"iPad4,5":326,"iPad4,6":326,"iPad4,7":326,"iPad4,8":326,"iPad4,9":326,"iPad5,1":326,"iPad5,2":326,"iPad5,3":264,"iPad5,4":264};
+		private var oScreenDPI:Object = {"iPad1,1":132,"iPad2,1":132,"iPad2,2":132,"iPad2,3":132,"iPad2,4":132,"iPad2,5":163,"iPad2,6":163,"iPad2,7":163,"iPad3,1":264,"iPad3,2":264,"iPad3,3":264,"iPad3,4":264,"iPad3,5":264,"iPad3,6":264,"iPad4,1":264,"iPad4,2":264,"iPad4,3":264,"iPad4,4":326,"iPad4,5":326,"iPad4,6":326,"iPad4,7":326,"iPad4,8":326,"iPad4,9":326,"iPad5,1":326,"iPad5,2":326,"iPad5,3":264,"iPad5,4":264,"iPad6,8":264};
 		private var oScreenSize:Object = {
 		"iPad1,1":9.7,
 		"iPad2,1":9.7,
@@ -50,7 +50,8 @@ package com.mrbbp {
 		"iPad5,1":7.9,
 		"iPad5,2":7.9,
 		"iPad5,3":9.7,
-		"iPad5,4":9.7
+		"iPad5,4":9.7,
+		"iPad6,8":12.9
 	};
 
 
