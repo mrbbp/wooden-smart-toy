@@ -1,5 +1,5 @@
 # wooden-smart-toy
-####This project is an as3 lib to detect and identify on iPad,<br />patented wooden pieces created and sold by Marbotic.fr.
+####This project is an as3 lib to detect and identify on iPad,iPhone and Android Device<br />patented wooden pieces created and sold by Marbotic.fr.
 
 ![marbotic wooden pieces] (http://www.marbotic.fr/wp-content/uploads/2013/11/chiffres-rond-400x400.jpg) ![marbotic wooden pieces - back view] (http://www.marbotic.fr/wp-content/uploads/2013/11/chiffres-picots-400x400.jpg)
 
@@ -11,18 +11,19 @@ The last pad is the satellite point which made the pattern, give the significant
 The satellite point is define by angle and distance from the middle point of the base, in polar's coords.
 The base width is fixe and always the smallest from the 3.
 
-To avoid screensize pb detection, i've decided to work in millimeter and made a truth table with true dpi of the screen.
+To avoid screensize pb detection, i've decided to work in millimeter and made a truth table with true dpi of the iPad et iPhone screen.
+but seems to work fine on Android Device.
 
-<code>flash.system.Capabilities.screenDPI</code> return fake value.<br/>
-I use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter. 
+<code>flash.system.Capabilities.screenDPI</code> return fake value on iPad and iPhone.<br/>
+Therefore, i use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter.
+On Android Device (on my MotoG (First Gen) and my cheap Lenovo A4) the value seems to be good and detection perform well. I decide to implement detection for them.
 
 Detection on iPad is relatively easy because there is few hardware: retina or none, 7.9 inch or 9.7. So only 4 screenDPI.
-I do not try to do the same truth table for Android, because hardware is so various (more screen size and more  resolution... a nigthmare.. if you need it, be my guest and share.)
 
 I'm not developer, just graphic & interaction designer, i do apologize for my bad english and my hugly code.
 Hope this will help!
 
-The project compile with Adobe Flash CC 2014 on osx.
+The project compile with Adobe Flash CC 2014/15 on osx.
 
 To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
 ```as3
