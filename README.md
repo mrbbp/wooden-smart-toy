@@ -22,7 +22,8 @@ Detection on iPad is relatively easy because there is few hardware: retina or no
 I'm not developer, just graphic & interaction designer, i do apologize for my bad english and my hugly code.
 Hope this will help!
 
-The project compile with Adobe Flash CC 2014/15 on osx.
+The project compile with Adobe Flash CC 2014/15 on osx with AIR17 and AIR19.<br/>
+there is no .fla file, you just need to create a new "AIR for Android" or "AIR for iOS" project and add <code>com.mrbbp.App</code> as your Main Class. (i've added custom icon for iOS and Android for fun)
 
 To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
 ```as3
@@ -39,6 +40,21 @@ import com.mrbbp.Piece;
 
 var debug:Debug = new Debug(this);
 var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), true);
+```
+
+To use the PieceEvent:
+
+```as3
+import com.mrbbp.PieceEvent;
+//... some code ...
+// add the listener to the stage
+stage.addEventListener(PieceEvent.PIECE_DETECTED, PieceEventHandler);
+//...
+function PieceEventHandler(pe:PieceEvent):void {
+	trace("PieceEvent: id:",pe.id,"- angle:",Math.round(pe.angle*10)/10,(pe.reverse)?"° - pièce inversée":"pièce à l'endroit");
+	trace(pe.toString());
+	trace(pe.ID);
+}
 ```
 
 I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt from a larger lib) http://www.github.com/as3/as3-utils

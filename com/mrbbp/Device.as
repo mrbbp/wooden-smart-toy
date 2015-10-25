@@ -1,11 +1,12 @@
-package com.mrbbp {
+﻿package com.mrbbp {
 	
 	/*
 	Permet d'identifier le type de tablette en fonction des données fournies par les flash.system.capabilities + une table d'info techniques justes (DPI, dimension écran)
 	
 	MàJ 18/10/15:
 		- ajout d'une gestion d'android pour les devices. sous android Capabilities.screenDPI semble fiable -> détection des pieces possible
-	
+		- ajout des nouveaux ipad mini fin 2015 + ipad Pro
+		- ajout des modèles d'iphone
 	
 	*/
 	
@@ -21,6 +22,7 @@ package com.mrbbp {
 		private var _resX:int;
 		private var _resY:int;
 		private var _model:String;
+		private var _type:String;
 		
 		private var oScreenDPI:Object = {
 		"iPhone1,1":163,"iPhone1,2":163,"iPhone2,1":163,"iPhone3,1":326,"iPhone3,2":326,"iPhone3,3":326,"iPhone4,1":326,"iPhone5,1":326,"iPhone5,2":326,"iPhone5,3":326,"iPhone5,4":326,"iPhone6,1":326,"iPhone6,2":326,"iPhone7,1":401,"iPhone7,2":326,"iPhone8,1":326,"iPhone8,2":401,
@@ -82,16 +84,15 @@ package com.mrbbp {
 			if (flash.system.Capabilities.version.split(" ")[0].toUpperCase() == "IOS") { // sous IOS
 				if (_model != null) {
 					_1mm = oScreenDPI[_model]/25.4;
-					trace("sous IOS");
-					trace("Device:",_model,oScreenDPI[_model],oScreenSize[_model],_1mm);
+					_type="iOS";
 					DPI = oScreenDPI[_model];
 				}
 			} else if (flash.system.Capabilities.version.split(" ")[0] == "AND") { // sous Android
-				trace("sous Android");
+				_type="Android";
 				_1mm = flash.system.Capabilities.screenDPI/25.4;
 				DPI = flash.system.Capabilities.screenDPI;
 			}  else {
-				trace("pas sous ios");
+				_type="autre";
 				_1mm = flash.system.Capabilities.screenDPI/25.4;
 				DPI = flash.system.Capabilities.screenDPI;
 			}
@@ -103,6 +104,10 @@ package com.mrbbp {
 		
 		public function Calcule1cm() {
 			return (_1mm*10);
+		}
+		
+		public function Infos() {
+			( _type=="iOS") ?trace("sous iOS:",_model,oScreenDPI[_model],oScreenSize[_model],_1mm):trace(_type);
 		}
 
 	}

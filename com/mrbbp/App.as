@@ -15,15 +15,15 @@
 	
 	import com.mrbbp.Debug;
 	import com.mrbbp.Piece;
-	//import com.mrbbp.Device;
+	import com.mrbbp.PieceEvent;
 	
-	public class Test extends MovieClip {
+	public class App extends MovieClip {
 		
 		private var debug:Debug;
 		/***** instancie la classe Piece ******/
 		private var piece:Piece;
-		// détection du device - ios uniquement
-		//private var device:Device;
+		// détection du dpi du device (obligatoire pour détection des pièces)
+		private var device:Device;
 		
 		public static var _stage:Stage = null;
 		
@@ -34,7 +34,7 @@
 		public var stageOrientation: String;
 		
 		
-		public function Test() {
+		public function App() {
 			// constructor code
 			addEventListener(Event.ACTIVATE, init);
 			addEventListener(Event.DEACTIVATE, iosDeactivateListener);
@@ -47,6 +47,7 @@
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
 			debug = new Debug(this);
+			debug.show(); // show debug textField
 			
 			// pour Piece();
 			_stage = stage;
@@ -54,6 +55,8 @@
 			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			stage.addEventListener(TouchEvent.TOUCH_BEGIN, addPoint);
 			stage.addEventListener(TouchEvent.TOUCH_END, rmPoint);
+			// add the PieceEvent Listener
+			stage.addEventListener(PieceEvent.PIECE_DETECTED, PieceEventHandler);
 		}
 		
 		/*********************************************
@@ -93,6 +96,12 @@
 		private function iosDeactivateListener(e: Event): void {
 			//do something when home button is pressed.
 
+		}
+		
+		private function PieceEventHandler(pe:PieceEvent):void {
+			trace("PieceEvent: id:",pe.id,"- angle:",Math.round(pe.angle*10)/10,(pe.reverse)?"° - pièce inversée":"pièce à l'endroit");
+			trace(pe.toString());
+			trace(pe.ID);
 		}
 
 	}

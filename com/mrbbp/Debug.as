@@ -1,6 +1,6 @@
 ﻿package com.mrbbp {
 
-	import com.mrbbp.Test;
+	import com.mrbbp.App;
 	import com.mrbbp.Device;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -8,23 +8,28 @@
 	import flash.display.Stage;
 	import flash.system.Capabilities;
 	import flash.events.StageOrientationEvent;
+	import flash.display.Sprite;
 
 	public class Debug {
 
-		public var parent:Test;
+		public var parent:App;
 		public var debugField: TextField;
 		public var dTF: TextFormat;
-		public var enabled: Boolean;
+		public var enabled: Boolean = false;
 		private var device:Device;
+		public var DPI:int;
+		public var etalon:Sprite;
 
-		public function Debug(lApp:Test) :void {
+		public function Debug(lApp:App) :void {
 			// constructor code
 			dTF = new TextFormat();
 			parent = lApp;
 			dTF.color = "0xFFFF11";
 			dTF.font = "verdana";
 			device = new Device(lApp);
-
+			// show device os / model(for ios only)
+			device.Infos();
+			
 			debugField = new TextField();
 			// si ajouté à la display liste, il connait stage
 			lApp.addChild(debugField);
@@ -62,10 +67,15 @@
 								"\nCPU: " + flash.system.Capabilities.cpuArchitecture +
 								" | OS: " + flash.system.Capabilities.os +
 								"\nStage: " + debugField.stage.stageWidth + " x " + debugField.stage.stageHeight +
-								" | ScreenDPI: " + flash.system.Capabilities.screenDPI +
+								" | ScreenDPI: " + flash.system.Capabilities.screenDPI + 
 								" | DPI réel: "+ device.DPI+
 								"\nstageOrientation :" + parent.stageOrientation +
-								"\n";
+								"\n"; // 
+								
+			debugField.visible = false;
+			DPI = device.DPI;
+			// dessin d'un étalon
+			drawEtalon(lApp);
 		}
 
 		public function write(text: String): void {
@@ -86,11 +96,13 @@
 		
 		public function show():void {
 			debugField.visible = true;
+			etalon.visible = true;
 			enabled = true;
 		}
 		
 		public function hide():void {
 			debugField.visible = false;
+			etalon.visible = false;
 			enabled = false;
 		}
 		
@@ -109,6 +121,16 @@
 			theContent = theContent.split(oldSO).join(parent.stageOrientation);
 			debugField.text = theContent;
 			
+		}
+		
+		public function drawEtalon(lApp:App) {
+			trace("drawEtalon");
+			etalon = new Sprite();
+			lApp.addChild(etalon);
+			etalon.graphics.clear();
+			etalon.graphics.beginFill(0xffffff);
+			etalon.graphics.drawRect(20,etalon.stage.stageHeight - 40, DPI/2.54, 20);
+			etalon.graphics.endFill();
 		}
 
 	}
