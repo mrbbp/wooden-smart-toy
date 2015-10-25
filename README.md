@@ -22,7 +22,8 @@ Detection on iPad is relatively easy because there is few hardware: retina or no
 I'm not developer, just graphic & interaction designer, i do apologize for my bad english and my hugly code.
 Hope this will help!
 
-The project compile with Adobe Flash CC 2014/15 on osx.
+The project compile with Adobe Flash CC 2014/15 on osx with AIR17 and AIR19.<br/>
+there is no .fla file, just creat a new "AIR for Android" or "AIR for iOS" project and add <code>com.mrbbp.App</code> as your Main Class. (i've added custom icon for iOS and Android)
 
 To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
 ```as3
