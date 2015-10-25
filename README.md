@@ -41,6 +41,21 @@ var debug:Debug = new Debug(this);
 var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), true);
 ```
 
+To use the PieceEvent:
+
+```as3
+import com.mrbbp.PieceEvent;
+... some code ...
+// add the listener to the stage
+stage.addEventListener(PieceEvent.PIECE_DETECTED, PieceEventHandler);
+...
+function PieceEventHandler(pe:PieceEvent):void {
+	trace("PieceEvent: id:",pe.id,"- angle:",Math.round(pe.angle*10)/10,(pe.reverse)?"° - pièce inversée":"pièce à l'endroit");
+	trace(pe.toString());
+	trace(pe.ID);
+}
+```
+
 I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt from a larger lib) http://www.github.com/as3/as3-utils
 
 Patents for touch grid and conduction way between capacitive screen and body are patented by

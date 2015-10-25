@@ -1,5 +1,6 @@
 ﻿package com.mrbbp {
 	
+	import com.mrbbp.App;
 	import com.mrbbp.Debug;
 	import com.mrbbp.Device;
 	
@@ -13,6 +14,10 @@
 	import flash.display.Stage;
 	import flash.display.DisplayObject;
 	import flash.events.Event;
+	
+	// for customEvent
+	import flash.events.EventDispatcher;
+	import com.mrbbp.PieceEvent;
 	
 	public class Piece extends MovieClip {
 		
@@ -34,26 +39,24 @@
 		public var idPiece:int = 99;
 		
 		// valeur accessibles
-		public var ecartBase:Number;
-		public var rho:Number;
-		public var theta:Number;
-		public var ecartBaseMM:Number;
-		public var rhoMM:Number;
+		public var ecartBase:Number; 	// écart des points de la base en pixels
+		public var rho:Number; 			// distance du point satellite en pixels
+		public var theta:Number; 		// angle du point satellite en degrés par rapport au centre de la base
+		public var ecartBaseMM:Number; 	// écart des points de la base en mm
+		public var rhoMM:Number; 		// distance du point satellite en mm
+		public var anglePiece:Number; 	// angle de la piece sur la tablette
+		public var pieceInverse:Boolean;// si pièce sens inversé
 
-		// stage & model (for screendpi)
-		private static var _racine:*;
+		// tablet model (for screendpi)
 		private var _device:Device;
-		
-		private var aEcartBase:Array = new Array();
 		
 		// pour le dessin de la piece en mode debug - for drawing Piece in debugMode
 		private var diamTrace:int;
 		private var epTrace:int;
 		private var aCoulTrace: Array = new Array("0xeeeeee", "0xaaaaaa", "0x666666", "0x222222");
-		private var _debug:Boolean = false;
+		private var _debug:Boolean;
 		private var INVERSE:Boolean = false;
 		private var piece:Shape;
-		private var numPiece:Shape;
 		
 		public function Piece(_p0:Point, _p1:Point, _p2:Point, debug:Boolean = false) {
 			p0 = _p0;
@@ -64,10 +67,10 @@
 		}
 		
 		private function activePiece(evt:Event):void {
+			
 			removeEventListener ( Event.ADDED_TO_STAGE, activePiece );
 			
 			_device = new Device(stage);
-			
 			var plusGrandeDim:int;
 			
 			if (flash.system.Capabilities.screenResolutionY > flash.system.Capabilities.screenResolutionX) {
@@ -93,7 +96,7 @@
 			piece.x = stage.stageWidth / 4; // au quart de l'écran
 			piece.y = (2* stage.stageHeight) / 3;
 			
-			// constructor code
+			// looking for the Base's Points by looking for smallest distance.
 			var d0: Number = Point.distance(p0, p1);
 			var d1: Number = Point.distance(p1, p2);
 			var d2: Number = Point.distance(p2, p0);
@@ -164,6 +167,51 @@
 			point.y = (Math.sin(Math.PI) * baseX) + (Math.cos(Math.PI) * baseY) + centerPoint.y;
 		}
 		
+		private function IdPiece():int {
+			// only usefull for Marbotic Wooden Pieces // Smarts Numbers
+			//	rhoMM, theta
+			if (rhoMM > 40) { // 42,46
+				if (rhoMM > 44) { // 46: 9,6
+					if ( theta < 90) {// 6
+						idPiece = 6;
+					} else { // 9
+						idPiece = 9;
+					}
+				} else { // 42: 2,5,7
+					if (theta > 100) {
+						idPiece = 2;
+					}
+					if (theta <= 100 && theta > 80) {
+						idPiece = 5;
+					}
+					if (theta <= 80) {
+						idPiece = 7;
+					}
+				}
+			} else { //38,34
+				if (rhoMM <=36) { // 34: 0,1,4
+					if (theta > 100) {
+						idPiece = 4;
+					}
+					if (theta <= 100 && theta > 80) {
+						idPiece = 0;
+					}
+					if (theta <= 80) {
+						idPiece = 1;
+					}
+				} else { // 38: 3,8
+					if ( theta < 90) {
+						idPiece = 8;
+					} else { 
+						idPiece = 3;
+					}
+				}
+				
+			}
+			// trace Piece Number
+			return idPiece
+		}
+		
 		private function RhoTheta():void {
 			//calcul le point median Base (.5)
 			// find Base midpoint
@@ -176,8 +224,7 @@
 				rotatePI(pB1, pBCentre);
 				rotatePI(pB2, pBCentre);
 				rotatePI(pSat, pBCentre);
-				INVERSE = true;
-				trace("base inversée");
+				INVERSE = pieceInverse = true;
 			}
 			
 			// décale les points de la Base avec 0,0 de Flash comme origine pour le calcul en polaire
@@ -198,7 +245,8 @@
 			pBCentre.setTo(0, 0);
 			
 			// inclinaison de la piece sur la tablette
-			var angle: Number = Math.atan2(pBaseD.y, pBaseD.x);
+			var angle:Number = Math.atan2(pBaseD.y, pBaseD.x);
+			anglePiece = angle * (180/Math.PI);
 
 			// tourne la pièce et la remet "droite"
 			var pBgTemp: Point = new Point(Math.cos(-angle) * pBaseG.x - Math.sin(-angle) * pBaseG.y, Math.sin(-angle) * pBaseG.x + Math.cos(-angle) * pBaseG.y);
@@ -241,57 +289,16 @@
 			ecartBaseMM = Math.round(ecartBase/_device._1mm);
 			
 			// add some debug trace
-			trace("point satellite - ecartBase:",ecartBaseMM,"mm RHO: ",rhoMM,"mm - THETA: ",theta,"°");
+			//trace("angle de la pièce:",anglePiece, (pieceInverse) ?"piece inversée":"pièce droite");
+			//trace("point satellite - ecartBase:",ecartBaseMM,"mm - RHO:",rhoMM,"mm - THETA:",theta,"°");
 
 			// Identify Piece for Marbotic wooden pieces
-			IdPiece();
+			//trace("Piece Number:",IdPiece());
 			
+			// dispatch PieceEvent
+			stage.dispatchEvent(new PieceEvent(PieceEvent.PIECE_DETECTED, IdPiece(), anglePiece, pieceInverse));
 		}
-		
-		private function IdPiece():void {
-			// only usefull for Marbotic Wooden Pieces
-			//	rhoMM, theta
-			if (rhoMM > 40) { // 42,46
-				if (rhoMM > 44) { // 46: 9,6
-					if ( theta < 90) {// 6
-						idPiece = 6;
-					} else { // 9
-						idPiece = 9;
-					}
-				} else { // 42: 2,5,7
-					if (theta > 100) {
-						idPiece = 2;
-					}
-					if (theta <= 100 && theta > 80) {
-						idPiece = 5;
-					}
-					if (theta <= 80) {
-						idPiece = 7;
-					}
-				}
-			} else { //38,34
-				if (rhoMM <=36) { // 34: 0,1,4
-					if (theta > 100) {
-						idPiece = 4;
-					}
-					if (theta <= 100 && theta > 80) {
-						idPiece = 0;
-					}
-					if (theta <= 80) {
-						idPiece = 1;
-					}
-				} else { // 38: 3,8
-					if ( theta < 90) {
-						idPiece = 8;
-					} else { 
-						idPiece = 3;
-					}
-				}
-				
-			}
-			// trace Piece Number
-			trace("Piece Number:",idPiece);
-		}
+
 	}
 	
 }
