@@ -23,7 +23,7 @@ I'm not developer, just graphic & interaction designer, i do apologize for my ba
 Hope this will help!
 
 The project compile with Adobe Flash CC 2014/15 on osx with AIR17 and AIR19.<br/>
-there is no .fla file, just creat a new "AIR for Android" or "AIR for iOS" project and add <code>com.mrbbp.App</code> as your Main Class. (i've added custom icon for iOS and Android)
+there is no .fla file, you just need to create a new "AIR for Android" or "AIR for iOS" project and add <code>com.mrbbp.App</code> as your Main Class. (i've added custom icon for iOS and Android for fun)
 
 To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
 ```as3
