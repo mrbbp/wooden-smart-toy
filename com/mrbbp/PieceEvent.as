@@ -16,12 +16,20 @@
 		public var id:Number; 			// id of the smart_toy
 		public var angle:Number;		// angle of the smart_toy (the tactil pattern pod) on the screen
 		public var reverse:Boolean;		// is the smart_toy is up side down
+		public var rho:Number;			// is the satellite point's distance(in millimeters) detected
+		public var theta:Number;		// is the satellite point's angle from the base (in degres) detected
+		public var baseWidth:Number;	// the width of base (in millimeters) detected
+		public var alpha:Number;		// initial orientation of the pattern on the piece
 		
-		public function PieceEvent(type:String, idPiece:Number, anglePiece:Number, pieceInverse:Boolean , bubbles:Boolean=false, cancelable:Boolean=false) {
+		public function PieceEvent(type:String, idPiece:Number, anglePiece:Number, pieceInverse:Boolean, pieceRho:Number, pieceTheta:Number, baseAlpha:Number, baseEcart:Number, bubbles:Boolean=false, cancelable:Boolean=false) {
 			super(type, bubbles, cancelable);
 			this.id = idPiece;
 			this.angle = anglePiece;
-			this.reverse = pieceInverse
+			this.reverse = pieceInverse;
+			this.theta = pieceTheta;
+			this.rho = pieceRho;
+			this.baseWidth = baseEcart;
+			this.alpha = baseAlpha;
 		}
 		
 		// useless
@@ -30,11 +38,11 @@
 		}
 
 		override public function clone():Event { 
-			return new PieceEvent(this.type, this.id, this.angle, this.reverse, this.bubbles, this.cancelable);
+			return new PieceEvent(this.type, this.id, this.angle, this.reverse, this.rho, this.theta, this.alpha, this.baseWidth, this.bubbles, this.cancelable);
 		}
 		
 		override public function toString():String {
-			return formatToString("Piece", "type", "id", "angle", "reverse");
+			return formatToString("Piece", "type", "rho", "theta", "baseWidth", "id", "angle", "alpha", "reverse");
 		}
 	}
 }

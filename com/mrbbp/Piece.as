@@ -1,6 +1,6 @@
 ﻿package com.mrbbp {
 	
-	import com.mrbbp.App;
+	import com.mrbbp.App; // change with your project main.as
 	import com.mrbbp.Debug;
 	import com.mrbbp.Device;
 	
@@ -57,6 +57,9 @@
 		private var _debug:Boolean;
 		private var INVERSE:Boolean = false;
 		private var piece:Shape;
+		
+		// inclinaison des patterns sur la pièce
+		private var tAlpha:Array = new Array(0,35,0,-15,-35,0,0,-7,0,-20); 
 		
 		public function Piece(_p0:Point, _p1:Point, _p2:Point, debug:Boolean = false) {
 			p0 = _p0;
@@ -176,6 +179,7 @@
 						idPiece = 6;
 					} else { // 9
 						idPiece = 9;
+						pieceInverse = !pieceInverse;
 					}
 				} else { // 42: 2,5,7
 					if (theta > 100) {
@@ -183,9 +187,11 @@
 					}
 					if (theta <= 100 && theta > 80) {
 						idPiece = 5;
+						pieceInverse = !pieceInverse;
 					}
 					if (theta <= 80) {
 						idPiece = 7;
+						pieceInverse = !pieceInverse;
 					}
 				}
 			} else { //38,34
@@ -198,6 +204,7 @@
 					}
 					if (theta <= 80) {
 						idPiece = 1;
+						pieceInverse = !pieceInverse;
 					}
 				} else { // 38: 3,8
 					if ( theta < 90) {
@@ -292,11 +299,12 @@
 			//trace("angle de la pièce:",anglePiece, (pieceInverse) ?"piece inversée":"pièce droite");
 			//trace("point satellite - ecartBase:",ecartBaseMM,"mm - RHO:",rhoMM,"mm - THETA:",theta,"°");
 
-			// Identify Piece for Marbotic wooden pieces
-			//trace("Piece Number:",IdPiece());
+			// Identify Piece for Marbotic wooden pieces			
+			idPiece = IdPiece();
+			//trace("Piece Number:",idTemp);
 			
 			// dispatch PieceEvent
-			stage.dispatchEvent(new PieceEvent(PieceEvent.PIECE_DETECTED, IdPiece(), anglePiece, pieceInverse));
+			stage.dispatchEvent(new PieceEvent(PieceEvent.PIECE_DETECTED, idPiece , anglePiece, pieceInverse, rhoMM, theta, tAlpha[idPiece], ecartBaseMM));
 		}
 
 	}
