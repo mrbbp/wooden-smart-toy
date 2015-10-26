@@ -49,7 +49,7 @@ Added a new <code>PieceEvent.PIECE_DETECTED</code> event
 PieceEvent is populated with some cool values about the detected piece.
 - <code>id</code>: *the number for the Smart Numbers*
 - <code>angle</code>: *orientation of the piece on the screen*
-- <code>reverse</code>: *is the piece reverse on the screen? (some pieces have reversed pattern, this is **not** what it return)*
+- <code>reverse</code>: *is the piece reverse on the screen? (some pieces have reversed pattern, this is __not__ what it return)*
 - <code>alpha</code>: *the angle of the pattern on the wood piece (in degres)*
 - <code>rho</code>: *satellite point's angle vs the base (in degres)*
 - <code>theta</code>: *satellite point's distance from the base (in millimeters)*
