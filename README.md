@@ -15,7 +15,8 @@ To avoid screensize pb detection, i've decided to work in millimeter and made a 
 
 <code>flash.system.Capabilities.screenDPI</code> return fake value on iPad and iPhone.<br/>
 Therefore, i use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter.
-On Android Device (on my MotoG (First Gen) and my cheap Lenovo A4) the value seems to be good and detection perform well. I decide to implement detection for them.
+On Android Device (on my MotoG (First Gen) and my cheap Lenovo A4) the value seems to be good and detection perform well. I've decided to implement detection for them.<br/>
+The detection on Android Device is not as accurate as on iDevice. Sorry for that, sometime id detected is wrong.
 
 Detection on iPad is relatively easy because there is few hardware: retina or none, 7.9 inch or 9.7. So only 4 screenDPI.
 
