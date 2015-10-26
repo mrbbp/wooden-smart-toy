@@ -42,17 +42,17 @@ var debug:Debug = new Debug(this);
 var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3), true);
 ```
 
-lib v2:
+####lib v2:
 	- Added a new <code>PieceEvent.PIECE_DETECTED</code> event
 
 PieceEvent is populated with some cool values about the detected piece.
-- id: *the number for the Smart Numbers*
-- angle: *orientation of the piece on the screen*
-- reverse: *is the piece reverse on the screen? (some pieces have reversed pattern, this is **not** what it return)*
-- alpha: *the angle of the pattern on the wood piece (in degres)*
-- rho: *satellite point's angle vs the base (in degres)*
-- theta: *satellite point's distance from the base (in millimeters)*
-- baseWidth: *the width of the base (in millimeters)*
+- <code>id</code>: *the number for the Smart Numbers*
+- <code>angle</code>: *orientation of the piece on the screen*
+- <code>reverse</code>: *is the piece reverse on the screen? (some pieces have reversed pattern, this is **not** what it return)*
+- <code>alpha</code>: *the angle of the pattern on the wood piece (in degres)*
+- <code>rho</code>: *satellite point's angle vs the base (in degres)*
+- <code>theta</code>: *satellite point's distance from the base (in millimeters)*
+- <code>baseWidth</code>: *the width of the base (in millimeters)*
 
 To use the PieceEvent:
 
