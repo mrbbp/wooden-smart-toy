@@ -44,7 +44,7 @@ var piece:Piece = new Piece(new Point(x1,y1), new Point(x2,y2), new Point(x3,y3)
 
 ####lib v2:
 
-	Added a new <code>PieceEvent.PIECE_DETECTED</code> event
+Added a new <code>PieceEvent.PIECE_DETECTED</code> event
 
 PieceEvent is populated with some cool values about the detected piece.
 - <code>id</code>: *the number for the Smart Numbers*
