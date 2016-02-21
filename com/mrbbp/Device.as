@@ -7,7 +7,8 @@
 		- ajout d'une gestion d'android pour les devices. sous android Capabilities.screenDPI semble fiable -> détection des pieces possible
 		- ajout des nouveaux ipad mini fin 2015 + ipad Pro
 		- ajout des modèles d'iphone
-	
+	MàJ 2/12/15
+		- ipad pro ref: iPad6,7, iPad6,8
 	*/
 	
 	import flash.system.Capabilities;
