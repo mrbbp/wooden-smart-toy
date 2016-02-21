@@ -15,8 +15,11 @@ To avoid screensize pb detection, i've decided to work in millimeter and made a 
 
 <code>flash.system.Capabilities.screenDPI</code> return fake value on iPad and iPhone.<br/>
 Therefore, i use the iPad number (ex. iPad4,4 for ipad mini retina wifi) from <code>flash.system.Capabilities.os</code> and a truth table to find the number of pixels for a millimeter.
-On Android Device (on my MotoG (First Gen) and my cheap Lenovo A4) the value seems to be good and detection perform well. I've decided to implement detection for them.<br/>
-The detection on Android Device is not as accurate as expected and in many case the detection is false. Sorry for that. (It seems if you increase frameRate, the detection is less effective.)
+On Android Device (on my MotoG (First Gen) and my cheap Lenovo A4) the value seems to be good and detection perform not as well as expected. I've decided to implement detection for them.<br/>
+
+The detection on **Android Device** is not as accurate as expected and in many case the detection is false. 
+It is an hardware touchscreen accuratie problem... cheap hardware are not enough accurate for this task than more expensive hardware as High end tablets like Samsung's or Apple's.<br>
+It seems too, that the detection is less effective, if you increase frameRate.)
 
 Detection on iPad is relatively easy because there is few hardware: retina or none, 7.9 inch or 9.7. So only 4 screenDPI.
 
@@ -26,7 +29,7 @@ Hope this will help!
 The project compile with Adobe Flash CC 2014/15 on osx with AIR17 and AIR19.<br/>
 there is no .fla file, you just need to create a new "AIR for Android" or "AIR for iOS" project and add <code>com.mrbbp.App</code> as your Main Class. (i've added custom icon for iOS and Android for fun)
 
-To use it you need at least 3 touch points on screen to instanciate a new Piece with 3 TouchPoint.
+To use it you need at least 3 TouchPoints on screen to instantiate a new Piece with 3 Points.
 ```as3
 import com.mrbbp.Piece;
 
@@ -75,7 +78,7 @@ function PieceEventHandler(pe:PieceEvent):void {
 I've used additional lib with custom cartesianToPolar method (less generic), from Ian McLean (excerpt from a larger lib) http://www.github.com/as3/as3-utils
 
 Patents for touch grid and conduction way between capacitive screen and body are patented by
-- Etienne Jean MINEUR and Bertrand DUPLAT from http://www.volumique.com [FR 2995423, FR 2994752, FR 2970352]*
-- Marie Merouze http://www.marbotic.fr [FR 3003661]*
+- Etienne Jean MINEUR and Bertrand DUPLAT, [Édition Volumique](http://www.volumique.com) [FR 2995423, FR 2994752, FR 2970352]*
+- Marie MÉROUZE, [Marbotic](http://www.marbotic.fr) [FR 3003661]*
 
 *[N° Patents find on http://www.inpi.fr]
