@@ -9,6 +9,8 @@
 		- ajout des modèles d'iphone
 	MàJ 2/12/15
 		- ipad pro ref: iPad6,7, iPad6,8
+	MàJ 3/22/16
+		- ipad pro 9,7: iPad6,4
 	*/
 	
 	import flash.system.Capabilities;
@@ -27,7 +29,7 @@
 		
 		private var oScreenDPI:Object = {
 		"iPhone1,1":163,"iPhone1,2":163,"iPhone2,1":163,"iPhone3,1":326,"iPhone3,2":326,"iPhone3,3":326,"iPhone4,1":326,"iPhone5,1":326,"iPhone5,2":326,"iPhone5,3":326,"iPhone5,4":326,"iPhone6,1":326,"iPhone6,2":326,"iPhone7,1":401,"iPhone7,2":326,"iPhone8,1":326,"iPhone8,2":401,
-		"iPad1,1":132,"iPad2,1":132,"iPad2,2":132,"iPad2,3":132,"iPad2,4":132,"iPad2,5":163,"iPad2,6":163,"iPad2,7":163,"iPad3,1":264,"iPad3,2":264,"iPad3,3":264,"iPad3,4":264,"iPad3,5":264,"iPad3,6":264,"iPad4,1":264,"iPad4,2":264,"iPad4,3":264,"iPad4,4":326,"iPad4,5":326,"iPad4,6":326,"iPad4,7":326,"iPad4,8":326,"iPad4,9":326,"iPad5,1":326,"iPad5,2":326,"iPad5,3":264,"iPad5,4":264,"iPad6,7":264,"iPad6,8":264};
+		"iPad1,1":132,"iPad2,1":132,"iPad2,2":132,"iPad2,3":132,"iPad2,4":132,"iPad2,5":163,"iPad2,6":163,"iPad2,7":163,"iPad3,1":264,"iPad3,2":264,"iPad3,3":264,"iPad3,4":264,"iPad3,5":264,"iPad3,6":264,"iPad4,1":264,"iPad4,2":264,"iPad4,3":264,"iPad4,4":326,"iPad4,5":326,"iPad4,6":326,"iPad4,7":326,"iPad4,8":326,"iPad4,9":326,"iPad5,1":326,"iPad5,2":326,"iPad5,3":264,"iPad5,4":264,"iPad6,4":264,"iPad6,7":264,"iPad6,8":264};
 		private var oScreenSize:Object = {
 		"iPhone1,1":3.5,
 		"iPhone1,2":3.5,
@@ -73,6 +75,7 @@
 		"iPad5,2":7.9,
 		"iPad5,3":9.7,
 		"iPad5,4":9.7,
+		"iPad6,4":9.7,
 		"iPad6,7":12.9,
 		"iPad6,8":12.9
 	};
